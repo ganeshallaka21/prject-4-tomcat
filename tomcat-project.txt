@@ -1,0 +1,55 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class FrontendApp {
+    public static void main(String[] args) {
+
+        // Create the window
+        JFrame frame = new JFrame("My Java Frontend");
+        frame.setSize(500, 350);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+
+        // Main panel
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(5, 1, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
+
+        // Title
+        JLabel title = new JLabel("Welcome to My App", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 24));
+
+        // Input fields
+        JTextField nameField = new JTextField();
+        nameField.setBorder(
+            BorderFactory.createTitledBorder("Enter your name")
+        );
+
+        // Button
+        JButton button = new JButton("Submit");
+
+        // Output
+        JLabel result = new JLabel("", SwingConstants.CENTER);
+
+        // Button action
+        button.addActionListener(e -> {
+            String name = nameField.getText();
+
+            if (name.isEmpty()) {
+                result.setText("Please enter your name!");
+            } else {
+                result.setText("Hello, " + name + "!");
+            }
+        });
+
+        // Add components
+        panel.add(title);
+        panel.add(nameField);
+        panel.add(button);
+        panel.add(result);
+
+        // Show window
+        frame.add(panel);
+        frame.setVisible(true);
+    }
+}
