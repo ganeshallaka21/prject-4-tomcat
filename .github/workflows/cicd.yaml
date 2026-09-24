@@ -40,7 +40,7 @@ jobs:
           echo "Deploying $WAR_FILE to DEV ($URL)"
           curl -u "$USER:$PASS" "$URL/list"
           curl -u "$USER:$PASS" --fail --show-error -T "$WAR_FILE" \
-            "$URL/deploy?path=/prject-4-tomcat&update=true"
+            "$URL/deploy?path=/project-4-tomcat&update=true"
   deploy-test:
     needs: deploy-dev
     runs-on: ubuntu-latest
@@ -58,7 +58,7 @@ jobs:
           echo "Deploying $WAR_FILE to TEST ($URL)"
           curl -u "$USER:$PASS" "$URL/list"
           curl -u "$USER:$PASS" --fail --show-error -T "$WAR_FILE" \
-            "$URL/deploy?path=/prject-4-tomcat&update=true"
+            "$URL/deploy?path=/project-4-tomcat&update=true"
   deploy-preprod:
     needs: deploy-test
     runs-on: ubuntu-latest
@@ -76,7 +76,7 @@ jobs:
           echo "Deploying $WAR_FILE to PRE-PROD ($URL)"
           curl -u "$USER:$PASS" "$URL/list"
           curl -u "$USER:$PASS" --fail --show-error -T "$WAR_FILE" \
-            "$URL/deploy?path=/prject-4-tomcat&update=true"
+            "$URL/deploy?path=/project-4-tomcat&update=true"
   deploy-prod:
     needs: deploy-preprod
     runs-on: ubuntu-latest
@@ -94,4 +94,4 @@ jobs:
           echo "Deploying $WAR_FILE to PROD ($URL)"
           curl -u "$USER:$PASS" "$URL/list"
           curl -u "$USER:$PASS" --fail --show-error -T "$WAR_FILE" \
-            "$URL/deploy?path=/prject-4-tomcat&update=true"
+            "$URL/deploy?path=/project-4-tomcat&update=true"
