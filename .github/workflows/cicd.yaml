@@ -19,7 +19,7 @@ jobs:
       - name: Find WAR file
         run: echo "WAR_FILE=$(ls target/*.war | head -n 1)" >> $GITHUB_ENV
       - name: Upload WAR artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: war-file
           path: ${{ env.WAR_FILE }}
