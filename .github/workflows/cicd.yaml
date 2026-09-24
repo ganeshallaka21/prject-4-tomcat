@@ -1,35 +1,28 @@
 name: Build and Deploy project-4-tomcat
-
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-
       - name: Build with Maven
         run: mvn clean package -DskipTests
-
       - name: Find WAR file
         run: echo "WAR_FILE=$(ls target/*.war | head -n 1)" >> $GITHUB_ENV
-
       - name: Upload WAR artifact
         uses: actions/upload-artifact@v4
         with:
           name: war-file
           path: ${{ env.WAR_FILE }}
-
   deploy-dev:
     needs: build
     runs-on: ubuntu-latest
@@ -37,7 +30,6 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: war-file
-
       - name: Deploy to DEV
         env:
           URL: ${{ secrets.TOMCAT_URL_DEV }}
@@ -49,7 +41,6 @@ jobs:
           curl -u "$USER:$PASS" "$URL/list"
           curl -u "$USER:$PASS" --fail --show-error -T "$WAR_FILE" \
             "$URL/deploy?path=/train-ticket-reservation&update=true"
-
   deploy-test:
     needs: deploy-dev
     runs-on: ubuntu-latest
@@ -57,7 +48,6 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: war-file
-
       - name: Deploy to TEST
         env:
           URL: ${{ secrets.TOMCAT_URL_TEST }}
@@ -69,7 +59,6 @@ jobs:
           curl -u "$USER:$PASS" "$URL/list"
           curl -u "$USER:$PASS" --fail --show-error -T "$WAR_FILE" \
             "$URL/deploy?path=/train-ticket-reservation&update=true"
-
   deploy-preprod:
     needs: deploy-test
     runs-on: ubuntu-latest
@@ -77,7 +66,6 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: war-file
-
       - name: Deploy to PRE-PROD
         env:
           URL: ${{ secrets.TOMCAT_URL_PRE_PROD }}
@@ -89,7 +77,6 @@ jobs:
           curl -u "$USER:$PASS" "$URL/list"
           curl -u "$USER:$PASS" --fail --show-error -T "$WAR_FILE" \
             "$URL/deploy?path=/train-ticket-reservation&update=true"
-
   deploy-prod:
     needs: deploy-preprod
     runs-on: ubuntu-latest
@@ -97,7 +84,6 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: war-file
-
       - name: Deploy to PROD
         env:
           URL: ${{ secrets.TOMCAT_URL_PROD }}
