@@ -45,7 +45,7 @@ jobs:
     needs: deploy-dev
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v8
         with:
           name: war-file
       - name: Deploy to TEST
@@ -63,7 +63,7 @@ jobs:
     needs: deploy-test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v8
         with:
           name: war-file
       - name: Deploy to PRE-PROD
@@ -81,7 +81,7 @@ jobs:
     needs: deploy-preprod
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v8
         with:
           name: war-file
       - name: Deploy to PROD
